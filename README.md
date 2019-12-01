@@ -20,8 +20,9 @@
 
 #### Project folder
 
-* In the models folder, you can find four machine learning architectures. (We mainly use conv_lstm, fnn, seq2seq these three models to do the reproduction work.)
-* In the loss folder, there are custom loss function dilate loss and it's back propagation implementation.
-* alpha_test and gamma_test folders contain our experiments on parameter \alpha and \gamma, and all the files can be executed on Jupyter notebook.
-*
-*
+* In the ***models*** folder, you can find four machine learning architectures. (We mainly use conv_lstm, fnn, seq2seq these three models to do the reproduction work.)
+* In the ***loss*** folder, there are custom loss function dilate loss and it's back propagation implementation.
+* ***alpha_test*** and ***gamma_test*** folders contain our experiments on parameter $\alpha$ and $\gamma$, and all the files can be executed on Jupyter notebook.
+* data folder includes all the data loaders which would be used when testing on different dataset.
+* ***diff_test*** folder has 12 Jupyter notebooks which consists of 4 different dataset runing on 3 models.
+* run_on_cnn_lstm_model.py$, $run\_on\_fcnn\_model.py$ and $run\_on\_seq2seq\_model.py$ are three python files that could be directly run on Pycharm. These experiments are only used synthetic data. If you want to try on different dataset, you need to download other dataset and put data into corresponding dataloader.
