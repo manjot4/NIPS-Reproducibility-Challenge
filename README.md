@@ -12,7 +12,7 @@
   * [Traffic Data](https://github.com/laiguokun/multivariate-time-series-data)
   
 * Related papers.
-  * [Shape and Time Distortion Loss for Training Deep Time Series Forecasting Models]()
+  * [Shape and Time Distortion Loss for Training Deep Time Series Forecasting Models](https://hal.archives-ouvertes.fr/hal-02291601/document)
   * [Soft-DTW: a Differentiable Loss Function for Time-Series](https://arxiv.org/pdf/1703.01541.pdf)
   * [Introducing the Temporal Distortion Index to perform a bidimensional analysis of renewable energy forecast](https://www.sciencedirect.com/science/article/pii/S0360544215014619)
   
