@@ -50,7 +50,11 @@ def train_model(net,loss_type, learning_rate, epochs=1000, gamma = 0.001,
             if (loss_type=='mse'):
                 loss_mse = criterion(target,outputs)
                 loss = loss_mse                   
- 
+            
+            if (loss_type=='dilate_shape'):    
+                loss, loss_shape, loss_temporal = dilate_loss(target,outputs,alpha, gamma, device)             
+                loss = loss_shape
+
             if (loss_type=='dilate'):    
                 loss, loss_shape, loss_temporal = dilate_loss(target,outputs,alpha, gamma, device)             
                   
@@ -119,7 +123,7 @@ train_model(net_gru_mse,loss_type='mse',learning_rate=0.001, epochs=500, gamma=g
 encoder = EncoderRNN(input_size=1, hidden_size=128, num_grulstm_layers=1, batch_size=batch_size).to(device)
 decoder = DecoderRNN(input_size=1, hidden_size=128, num_grulstm_layers=1,fc_units=16, output_size=1).to(device)
 net_gru_mse_shape = Net_GRU(encoder,decoder, N_output, device).to(device)
-train_model(net_gru_mse_shape,loss_type='mse',learning_rate=0.001, epochs=500, gamma=gamma, print_every=50, eval_every=50,verbose=1)
+train_model(net_gru_mse_shape,loss_type='dilate_shape',learning_rate=0.001, epochs=500, gamma=gamma, print_every=50, eval_every=50,verbose=1)
 
 # Visualize results
 gen_test = iter(testloader)

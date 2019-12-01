@@ -51,7 +51,11 @@ def train_model(net,loss_type, learning_rate, epochs=1000, gamma = 0.001,
             
             if (loss_type=='mse'):
                 loss_mse = criterion(target,outputs)
-                loss = loss_mse                   
+                loss = loss_mse     
+
+            if (loss_type=='dilate_shape'):    
+                loss, loss_shape, loss_temporal = dilate_loss(target,outputs,alpha, gamma, device)             
+                loss = loss_shape              
  
             if (loss_type=='dilate'):    
                 loss, loss_shape, loss_temporal = dilate_loss(target,outputs,alpha, gamma, device)             
