@@ -19,4 +19,7 @@ Shape and Time Distortion Loss forTraining Deep Time Series Forecasting Models
 •In the loss folder, there are custom loss functiondilate lossand it’s backpropagation implementation.
 •alphatestandgammatestfolders contain our experiments on parameterαandγ, and all the files can be executed on Jupyter notebook.
 •datafolder includes all the data loaders which would be used when testingon different dataset.1
-•difftestfolder  has  12  Jupyter  notebooks  which  consists  of  4  differentdataset runing on 3 models.•runoncnnlstmmodel.py,runonfcnnmodel.pyandrunonseq2seqmodel.pyare three python files that could be directly run on +Pycharm.  These ex-periments are only used synthetic data.  If you want to try on differentdataset, you need to download +other dataset and put data into correspond-ing dataloader
+•difftestfolder  has  12  Jupyter  notebooks  which  consists  of  4  differentdataset runing on 3 models.•runoncnnlstmmodel.py,runonfcnnmodel.pyandrunonseq2seqmodel.pyare three python files that could be directly run on Pycharm.  These ex-periments are only used synthetic data.  If you want to try on differentdataset, you need to download other dataset and put data into correspond-ing dataloader
+
+
+##MaHua是什么?
