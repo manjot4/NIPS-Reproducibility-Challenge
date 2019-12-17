@@ -16,6 +16,20 @@
   * [Soft-DTW: a Differentiable Loss Function for Time-Series](https://arxiv.org/pdf/1703.01541.pdf)
   * [Introducing the Temporal Distortion Index to perform a bidimensional analysis of renewable energy forecast](https://www.sciencedirect.com/science/article/pii/S0360544215014619)
   
+### Dependencies
+
+The required dependencies are:
+
+```
+numPy 
+pandas
+matplotlib
+sklearn
+pytorch
+numba
+tslearn
+```
+
 ### Content
 
 #### Project folder
