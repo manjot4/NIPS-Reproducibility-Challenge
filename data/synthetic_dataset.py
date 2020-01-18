@@ -57,9 +57,9 @@ def load_ECG5000(filepath_loc_train, filepath_loc_test):
     return x_train_ip, x_train_op, x_test_ip, x_test_op, train_bkp, test_bkp
 
 # This dataset class is used for every dataset. 
-class ECG5000Dataset(torch.utils.data.Dataset):
+class create_Dataset(torch.utils.data.Dataset):
     def __init__(self, X_input, X_target, breakpoints):
-        super(ECG5000Dataset, self).__init__()  
+        super(create_Dataset, self).__init__()  
         self.X_input = X_input
         self.X_target = X_target
         self.breakpoints = breakpoints
@@ -68,36 +68,7 @@ class ECG5000Dataset(torch.utils.data.Dataset):
         return (self.X_input).shape[0]
 
     def __getitem__(self, idx):
-        # return (self.X_input[idx,:], self.X_target[idx,:], self.breakpoints[idx])
         return (self.X_input[idx,:,np.newaxis], self.X_target[idx,:,np.newaxis], self.breakpoints[idx])
-
-
-# Minimum Temperature Dataset
-# def load_mintemp(filepath, N):
-#     data = pd.read_csv(filepath)
-#     data  = list(data['Temp']) 
-#     total_data = []
-#     for i in range(len(data)-59):
-#         a = [data[i:i+60]]
-#         total_data.append(a)
-#     train_data = total_data[:1000]
-#     test_data = total_data[1000:3500]
-#     # converting data between -1,1
-#     train_data, test_data = np.asarray(train_data), np.asarray(test_data)
-#     train_data, test_data = np.squeeze(train_data, axis = 1), np.squeeze(test_data, axis = 1)
-#     min_max_scaler = preprocessing.MinMaxScaler()
-#     train_data = min_max_scaler.fit_transform(train_data)
-#     test_data = min_max_scaler.fit_transform(test_data)
-#     # print (train_data.shape, test_data.shape)
- 
-#     train_bkp = np.asarray([0]*len(train_data))
-#     test_bkp = np.asarray([0]*len(test_data))
-#     x_train_ip = train_data[:, 0:N] 
-#     x_train_op = train_data[:, N:]
-#     x_test_ip = test_data[:, 0:N] 
-#     x_test_op = test_data[:, N:]        
-#     return x_train_ip, x_train_op, x_test_ip, x_test_op, train_bkp, test_bkp
-
 
 # Traffic dataset - filepath - Change as appropriate
 def load_traffic(filepath):

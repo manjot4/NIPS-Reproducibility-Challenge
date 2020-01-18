@@ -35,6 +35,7 @@ def train_model(net,loss_type, learning_rate, epochs=1000, gamma = 0.001,
     
     optimizer = torch.optim.Adam(net.parameters(),lr=learning_rate)
     criterion = torch.nn.MSELoss()
+    huber_loss = torch.nn.SmoothL1Loss()
     
     for epoch in range(epochs): 
         for i, data in enumerate(trainloader, 0):
@@ -56,7 +57,10 @@ def train_model(net,loss_type, learning_rate, epochs=1000, gamma = 0.001,
                 loss = loss_shape
 
             if (loss_type=='dilate'):    
-                loss, loss_shape, loss_temporal = dilate_loss(target,outputs,alpha, gamma, device)             
+                loss, loss_shape, loss_temporal = dilate_loss(target,outputs,alpha, gamma, device)
+            
+            if (loss_type == 'huber'):
+                loss = huber_loss(target, outputs)
                   
             optimizer.zero_grad()
             loss.backward()
@@ -125,6 +129,11 @@ decoder = DecoderRNN(input_size=1, hidden_size=128, num_grulstm_layers=1,fc_unit
 net_gru_mse_shape = Net_GRU(encoder,decoder, N_output, device).to(device)
 train_model(net_gru_mse_shape,loss_type='dilate_shape',learning_rate=0.001, epochs=500, gamma=gamma, print_every=50, eval_every=50,verbose=1)
 
+encoder = EncoderRNN(input_size=1, hidden_size=128, num_grulstm_layers=1, batch_size=batch_size).to(device)
+decoder = DecoderRNN(input_size=1, hidden_size=128, num_grulstm_layers=1,fc_units=16, output_size=1).to(device)
+net_gru_huber = Net_GRU(encoder,decoder, N_output, device).to(device)
+train_model(net_gru_huber,loss_type='huber',learning_rate=0.001, epochs=500, gamma=gamma, print_every=50, eval_every=50,verbose=1)
+
 # Visualize results
 gen_test = iter(testloader)
 test_inputs, test_targets, breaks = next(gen_test)
@@ -133,11 +142,11 @@ test_inputs  = torch.tensor(test_inputs, dtype=torch.float32).to(device)
 test_targets = torch.tensor(test_targets, dtype=torch.float32).to(device)
 criterion = torch.nn.MSELoss()
 
-nets = [net_gru_mse,net_gru_mse_shape,net_gru_dilate]
+nets = [net_gru_mse,net_gru_mse_shape,net_gru_dilate, net_gru_huber]
 
 for ind in range(1,51):
     plt.figure()
-    plt.rcParams['figure.figsize'] = (17.0,5.0)  
+    plt.rcParams['figure.figsize'] = (24.0,5.0)  
     k = 1
     for net in nets:
         pred = net(test_inputs).to(device)
@@ -146,7 +155,7 @@ for ind in range(1,51):
         target = test_targets.detach().cpu().numpy()[ind,:,:]
         preds = pred.detach().cpu().numpy()[ind,:,:]
 
-        plt.subplot(1,3,k)
+        plt.subplot(1,4,k)
         plt.plot(range(0,N_input) ,input,label='input',linewidth=3)
         plt.plot(range(N_input-1,N_input+N_output), np.concatenate([ input[N_input-1:N_input], target ]) ,label='target',linewidth=3)   
         plt.plot(range(N_input-1,N_input+N_output),  np.concatenate([ input[N_input-1:N_input], preds ])  ,label='prediction',linewidth=3)       
